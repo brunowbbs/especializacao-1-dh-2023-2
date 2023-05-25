@@ -75,7 +75,10 @@ export default function Table(props) {
         </thead>
         <tbody>
           {data.map((aluno, index) => (
-            <tr className="border-b border-b-gray-500 font-light">
+            <tr
+              key={aluno._id}
+              className="border-b border-b-gray-500 font-light"
+            >
               <td>{index + 1}</td>
               <td>{aluno.nome}</td>
               <td>{aluno.matricula}</td>
