@@ -28,16 +28,20 @@ function App() {
 
   return (
     <QueryClientProvider client={client}>
-      <h1 className="text-3xl text-red-600  font-bold">Diário Eletrônico</h1>
+      <div className="h-[100vh] bg-background p-5">
+        <h1 className="mb-3 text-3xl  font-bold text-white">
+          Diário Eletrônico
+        </h1>
 
-      <Form
-        formData={formData}
-        setFormData={setFormData}
-        clearState={clearState}
-      />
+        <Form
+          formData={formData}
+          setFormData={setFormData}
+          clearState={clearState}
+        />
 
-      <Table formData={formData} setFormData={setFormData} />
-      <ToastContainer />
+        <Table formData={formData} setFormData={setFormData} />
+        <ToastContainer />
+      </div>
     </QueryClientProvider>
   );
 }

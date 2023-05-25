@@ -9,6 +9,7 @@ export default {
       colors: {
         danger: "#e74c3c",
         sucess: "#27ae60",
+        background: "#050915",
       },
     },
   },
