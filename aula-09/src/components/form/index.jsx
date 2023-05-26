@@ -3,6 +3,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import getCursos from "../../requests/cursos";
 import { editarAluno, saveAluno } from "../../requests/aluno";
 import { toast } from "react-toastify";
+import Modal from "../modal";
+import Loading from "../loading";
 
 export default function Form(props) {
   const queryClient = useQueryClient();
@@ -13,7 +15,11 @@ export default function Form(props) {
     refetchOnWindowFocus: false,
   });
 
-  const { mutate, error } = useMutation(saveAluno, {
+  const {
+    mutate,
+    error,
+    isLoading: loadingSave,
+  } = useMutation(saveAluno, {
     onSuccess: () => {
       toast.success("salvo com sucesso");
       queryClient.invalidateQueries(["@alunos"]);
@@ -21,13 +27,16 @@ export default function Form(props) {
     onError: () => toast.error("Erro ao salvar dados"),
   });
 
-  const { mutate: editMutate } = useMutation(editarAluno, {
-    onSuccess: () => {
-      toast.success("editado com sucesso");
-      queryClient.invalidateQueries(["@alunos"]);
-    },
-    onError: () => toast.error("Erro ao salvar dados"),
-  });
+  const { mutate: editMutate, isLoading: loadingEdit } = useMutation(
+    editarAluno,
+    {
+      onSuccess: () => {
+        toast.success("editado com sucesso");
+        queryClient.invalidateQueries(["@alunos"]);
+      },
+      onError: () => toast.error("Erro ao salvar dados"),
+    }
+  );
 
   function edit() {
     editMutate({
@@ -106,6 +115,9 @@ export default function Form(props) {
       >
         Salvar
       </button>
+      <Modal isLoading={loadingEdit || loadingSave}>
+        <Loading />
+      </Modal>
     </div>
   );
 }

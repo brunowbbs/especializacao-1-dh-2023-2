@@ -3,24 +3,10 @@ import getAlunos from "../../requests/aluno";
 
 import { removerAluno } from "../../requests/aluno";
 import { toast } from "react-toastify";
-import Modal from "react-modal";
+
 import { useState } from "react";
-
-const customStyles = {
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-
-Modal.setAppElement("#root");
+import Modal from "../modal";
+import Loading from "../loading";
 
 export default function Table(props) {
   const { setFormData } = props;
@@ -34,7 +20,7 @@ export default function Table(props) {
     refetchOnWindowFocus: false,
   });
 
-  const { mutate } = useMutation(removerAluno, {
+  const { mutate, isLoading } = useMutation(removerAluno, {
     onSuccess: () => {
       queryClient.invalidateQueries(["@alunos"]);
       toast.success("Apagado com sucesso!");
@@ -44,18 +30,33 @@ export default function Table(props) {
     },
   });
 
-  if (isFetching) {
-    return <h3>Buscando alunos...</h3>;
+  function renderSkeleton() {
+    return (
+      <div class="mx-auto mt-12 w-full shadow">
+        <div class="flex animate-pulse space-x-4">
+          {/* <div class="h-10 w-10 rounded-full bg-slate-700"></div> */}
+          <div class="w-full flex-1 space-y-2">
+            <div class="h-10 rounded  bg-slate-900"></div>
+            <div class="h-10 rounded bg-slate-900"></div>
+            <div class="h-10 rounded bg-slate-900"></div>
+            <div class="h-10 rounded bg-slate-900"></div>
+            <div class="h-10 rounded bg-slate-900"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   function apagarAluno(id) {
-    // alert(id);
     mutate(id);
   }
 
   function preencherCampos(aluno) {
-    // alert(JSON.stringify(aluno))
     setFormData({ ...aluno, id: aluno._id });
+  }
+
+  if (isFetching) {
+    return renderSkeleton();
   }
 
   return (
@@ -74,7 +75,7 @@ export default function Table(props) {
           </tr>
         </thead>
         <tbody>
-          {data.map((aluno, index) => (
+          {data?.map((aluno, index) => (
             <tr
               key={aluno._id}
               className="border-b border-b-gray-500 font-light"
@@ -107,11 +108,8 @@ export default function Table(props) {
       </table>
       <Modal
         isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
         onAfterClose={() => setAlunoSelecionado({})}
         onRequestClose={() => setIsOpen(false)}
-        style={customStyles}
-        contentLabel="Example Modal"
       >
         <div>
           <h1 className="mb-2 font-poppins">Confirmar Exclusão</h1>
@@ -132,7 +130,6 @@ export default function Table(props) {
             <button
               onClick={() => {
                 setIsOpen(false);
-                // apagarAluno(aluno._id);
               }}
               className="text-whittransition m-1 rounded-md bg-danger px-4 py-2 text-xs font-normal text-white delay-100 ease-out hover:bg-red-950"
             >
@@ -140,6 +137,9 @@ export default function Table(props) {
             </button>
           </div>
         </div>
+      </Modal>
+      <Modal isLoading={isLoading}>
+        <Loading />
       </Modal>
     </div>
   );
