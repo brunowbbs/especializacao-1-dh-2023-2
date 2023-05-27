@@ -28,7 +28,7 @@ function App() {
 
   return (
     <QueryClientProvider client={client}>
-      <div className="h-[100vh] bg-background p-5">
+      <div className="min-h-[100vh] bg-background p-5">
         <h1 className="mb-3 text-3xl  font-bold text-white">
           Diário Eletrônico
         </h1>

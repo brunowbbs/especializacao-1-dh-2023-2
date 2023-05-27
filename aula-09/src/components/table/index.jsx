@@ -61,7 +61,7 @@ export default function Table(props) {
 
   return (
     <div className="font-poppins">
-      <h1 className="my-5 text-white">Minha table</h1>
+      <h1 className="my-5 text-white">Alunos</h1>
 
       <table className="min-w-full text-gray-400">
         <thead>
