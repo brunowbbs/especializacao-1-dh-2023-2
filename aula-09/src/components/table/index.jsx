@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import getAlunos from "../../requests/aluno";
 
@@ -18,6 +19,33 @@ export default function Table(props) {
 
   const { data, isFetching } = useQuery(["@alunos"], getAlunos, {
     refetchOnWindowFocus: false,
+    // initialData: [
+    //   {
+    //     _id: "64712ab10a88d10008e173b1",
+    //     nome: "Alícia Machado",
+    //     matricula: "254598",
+    //     curso: "Desenvolvimento Front-end",
+    //     bimestre: "1",
+    //     __v: 0,
+    //   },
+    //   {
+    //     _id: "64712ac20a88d10008e173b2",
+    //     nome: "Marcos Vinicius",
+    //     matricula: "254898",
+    //     curso: "Desenvolvimento Full-stack",
+    //     bimestre: "3",
+    //     __v: 0,
+    //   },
+    //   {
+    //     _id: "64712ad90a88d10008e173b3",
+    //     nome: "José Augusto",
+    //     matricula: "021588",
+    //     curso: "Desenvolvimento Mobile",
+    //     bimestre: "3",
+    //     __v: 0,
+    //   },
+
+    // ],
   });
 
   const { mutate, isLoading } = useMutation(removerAluno, {
@@ -32,15 +60,14 @@ export default function Table(props) {
 
   function renderSkeleton() {
     return (
-      <div class="mx-auto mt-12 w-full shadow">
-        <div class="flex animate-pulse space-x-4">
-          {/* <div class="h-10 w-10 rounded-full bg-slate-700"></div> */}
-          <div class="w-full flex-1 space-y-2">
-            <div class="h-10 rounded  bg-slate-900"></div>
-            <div class="h-10 rounded bg-slate-900"></div>
-            <div class="h-10 rounded bg-slate-900"></div>
-            <div class="h-10 rounded bg-slate-900"></div>
-            <div class="h-10 rounded bg-slate-900"></div>
+      <div className="mx-auto mt-12 w-full shadow">
+        <div className="flex animate-pulse space-x-4">
+          <div className="w-full flex-1 space-y-2">
+            <div className="h-10 rounded  bg-slate-900"></div>
+            <div className="h-10 rounded bg-slate-900"></div>
+            <div className="h-10 rounded bg-slate-900"></div>
+            <div className="h-10 rounded bg-slate-900"></div>
+            <div className="h-10 rounded bg-slate-900"></div>
           </div>
         </div>
       </div>
