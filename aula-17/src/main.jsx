@@ -22,6 +22,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
   2. Criar os reducers
 
+  3. Implementar as actions
 
+  4. Criar condicionais do reducer
 
 */
