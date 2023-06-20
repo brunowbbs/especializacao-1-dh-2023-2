@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./redux/store";
 import { Dispatch } from "redux";
+import { RootState } from "./redux/store";
 import { Action } from "./redux/reducers/types";
 
 function App() {
