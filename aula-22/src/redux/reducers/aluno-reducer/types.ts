@@ -6,6 +6,13 @@ export type State = {
     curso: string;
     bimestre: string;
   }[];
+  favoritos: {
+    _id: string;
+    nome: string;
+    matricula: string;
+    curso: string;
+    bimestre: string;
+  }[];
   loading: boolean;
 };
 
